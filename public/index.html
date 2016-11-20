@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>App</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<form>
+		<input type="text" id="title" name="title"><br>
+		<input type="text" id="author" name="author"><br>
+		<input type="text" id="content" name="content"><br>
+		<input id="add" type="submit" value="ADD">			
+	</form>
+
+	<div id="books"></div>
+
+	<script type="text/template" id="bookTemplate">
+		<ul>
+			<li>Title: <%= title %></li>
+			<li>Author: <%= author %></li>
+			<li>Content: <%= content %></li>
+		</ul>
+		<button class="delete">Delete</button>
+	</script>
+	<script src="vendor/jquery.min.js"></script>
+	<script src="vendor/underscore-min.js"></script>
+	<script src="vendor/backbone-min.js"></script>
+	<script src="js/app.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#add').on('click', function() {
+				$.ajax({
+					url: "/api/books",
+					method: "POST",
+					data: {title: $('#title').val(),author: $('#author').val(), content: $('#content').val(),},
+					success: function() {
+				        window.location = '/';
+				    }
+				}).done(function(){
+					alert('Created');
+				});
+			});
+		});
+	</script>
+</body>
+</html>
